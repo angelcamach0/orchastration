@@ -11,6 +11,7 @@ type Config struct {
 	Logging LoggingConfig `toml:"logging"`
 	Hash    HashConfig    `toml:"hash"`
 	Jobs    map[string]JobConfig `toml:"jobs"`
+	Tasks   map[string]TaskConfig `toml:"tasks"`
 }
 
 type LoggingConfig struct {
@@ -27,6 +28,16 @@ type JobConfig struct {
 	WorkingDir     string            `toml:"working_dir"`
 	TimeoutSeconds int               `toml:"timeout_seconds"`
 	Env            map[string]string `toml:"env"`
+}
+
+type TaskConfig struct {
+	Description string   `toml:"description"`
+	Repo        string   `toml:"repo"`
+	WorkingDir  string   `toml:"working_dir"`
+	Command     []string `toml:"command"`
+	Outputs     []string `toml:"outputs"`
+	Documents   []string `toml:"documents"`
+	Status      string   `toml:"status"`
 }
 
 func Default() Config {
