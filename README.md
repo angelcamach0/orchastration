@@ -52,6 +52,8 @@ orchastration run sample
 orchastration status
 ```
 
+For a step-by-step walkthrough, see `USAGE.md`.
+
 ## Configuration
 The config file is optional. If missing, defaults are used.
 - Linux: `$XDG_CONFIG_HOME/orchastration/config.toml` (falls back to `~/.config/orchastration/config.toml`)
