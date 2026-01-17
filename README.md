@@ -63,3 +63,5 @@ Logs are JSON and written to stdout and a log file:
 
 ## Permissions
 Runs as a normal user. It only needs read access to files you hash and write access to your user config/cache directories.
+
+This project is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0). See LICENSE and NOTICE.
