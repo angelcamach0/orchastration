@@ -1,12 +1,12 @@
 # Orchastration
 
-Orchastration is a cross-platform CLI that orchestrates deterministic, auditable execution of user-defined jobs on a single machine. It also provides a file hashing command for integrity checks.
+Orchastration is a cross-platform CLI that orchestrates deterministic, auditable execution of user-defined jobs and workflow tasks on a single machine. It also provides a file hashing command for integrity checks.
 
 ## Features
 - Native binaries for Windows and Linux
 - Structured logging to stdout and a log file
 - OS-appropriate config and log locations
-- Deterministic, auditable job execution with local state records
+- Deterministic, auditable job and task execution with local state records
 
 ## Install
 
@@ -50,6 +50,11 @@ orchastration hash --file ./path/to/file
 orchastration list
 orchastration run sample
 orchastration status
+orchastration plan list
+orchastration plan create sample_task
+orchastration plan status sample_task
+orchastration build run sample_task
+orchastration doc generate sample_task
 ```
 
 For a step-by-step walkthrough, see `USAGE.md`.
@@ -66,8 +71,11 @@ Execution records are stored under an OS-appropriate state directory (override w
 - Linux: `$XDG_CACHE_HOME/orchastration/state` (falls back to `~/.cache/orchastration/state`)
 - Windows: `%LocalAppData%\\orchastration\\state`
 
-Each run is recorded under:
+Job runs are recorded under:
 `state/runs/<job-name>/<timestamp>.json` and `state/runs/<job-name>/last.json`
+
+Task state is recorded under:
+`state/tasks/<task>.json` and task runs under `state/runs/<task>/<timestamp>.json`
 
 ## Logging
 Logs are JSON and written to stdout and a log file:

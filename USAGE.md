@@ -45,11 +45,25 @@ Copy-Item -Force configs\config.example.toml "$env:AppData\orchastration\config.
 ./dist/orchastration status
 ```
 
+5. Plan and build a task:
+```bash
+./dist/orchastration plan list
+./dist/orchastration plan create sample_task
+./dist/orchastration plan status sample_task
+./dist/orchastration build run sample_task
+./dist/orchastration doc generate sample_task
+```
+
 ## Commands
 
 - `orchastration list`: show configured jobs
 - `orchastration run <job-name>`: execute a job by name
 - `orchastration status`: show last recorded run for each job
+- `orchastration plan list`: list configured tasks
+- `orchastration plan create <task>`: initialize task state
+- `orchastration plan status <task>`: show task state
+- `orchastration build run <task>`: execute task command
+- `orchastration doc generate <task>`: generate task documentation
 - `orchastration hash --file <path>`: compute file hash
 - `orchastration --help`: show help
 - `orchastration --version`: show version

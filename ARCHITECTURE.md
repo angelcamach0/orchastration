@@ -5,7 +5,7 @@ Orchastration follows a small, layered layout that cleanly separates CLI entrypo
 
 ## Layers
 - `cmd/orchastration`: CLI entrypoint, delegates to application layer.
-- `internal/app`: Command parsing and orchestration for each CLI command.
+- `internal/app`: Command parsing and orchestration for each CLI command (jobs and workflow tasks).
 - `internal/config`: Config structs and TOML loading.
 - `internal/logging`: Structured logging setup.
 - `internal/platform`: OS-aware config and log paths.
@@ -17,7 +17,7 @@ Orchastration follows a small, layered layout that cleanly separates CLI entrypo
 2. Config is loaded from the OS-appropriate location (or a user-provided path).
 3. Logging is configured for stdout and file output.
 4. Command runs with structured logs and explicit error handling.
-5. Job execution records are persisted under the OS-appropriate state directory.
+5. Job and task execution records are persisted under the OS-appropriate state directory.
 
 ## Extensibility
 Add new commands by creating a new `runX` function in `internal/app` and wiring it in the command switch. If a command needs OS-specific behavior, add a helper to `internal/platform`.
