@@ -10,6 +10,7 @@ import (
 type Config struct {
 	Logging LoggingConfig `toml:"logging"`
 	Hash    HashConfig    `toml:"hash"`
+	Jobs    map[string]JobConfig `toml:"jobs"`
 }
 
 type LoggingConfig struct {
@@ -18,6 +19,14 @@ type LoggingConfig struct {
 
 type HashConfig struct {
 	Algorithm string `toml:"algorithm"`
+}
+
+type JobConfig struct {
+	Description    string            `toml:"description"`
+	Command        []string          `toml:"command"`
+	WorkingDir     string            `toml:"working_dir"`
+	TimeoutSeconds int               `toml:"timeout_seconds"`
+	Env            map[string]string `toml:"env"`
 }
 
 func Default() Config {

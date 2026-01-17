@@ -3,3 +3,10 @@ level = "info"
 
 [hash]
 algorithm = "sha256"
+
+[jobs.sample]
+description = "List current directory"
+command = ["ls", "-la"]
+working_dir = "."
+timeout_seconds = 10
+env = { SAMPLE_ENV = "true" }

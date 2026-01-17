@@ -28,3 +28,15 @@ func DefaultLogPath(appName string) string {
 	}
 	return filepath.Join(dir, appName, appName+".log")
 }
+
+func DefaultStateDir(appName string) string {
+	dir, err := os.UserCacheDir()
+	if err != nil {
+		home, _ := os.UserHomeDir()
+		if home == "" {
+			return filepath.Join(".", "state")
+		}
+		return filepath.Join(home, ".cache", appName, "state")
+	}
+	return filepath.Join(dir, appName, "state")
+}

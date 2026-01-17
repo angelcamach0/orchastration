@@ -36,6 +36,7 @@ func Run(args []string, ver version.Info) (int, error) {
 	root := flag.NewFlagSet(appName, flag.ContinueOnError)
 	root.SetOutput(io.Discard)
 	configPathFlag := root.String("config", "", "path to config file")
+	stateDirFlag := root.String("state-dir", "", "path to state directory")
 	if err := root.Parse(args); err != nil {
 		return 2, err
 	}
@@ -49,6 +50,10 @@ func Run(args []string, ver version.Info) (int, error) {
 	cfgPath := *configPathFlag
 	if cfgPath == "" {
 		cfgPath = platform.DefaultConfigPath(appName)
+	}
+	stateDir := *stateDirFlag
+	if stateDir == "" {
+		stateDir = platform.DefaultStateDir(appName)
 	}
 
 	cfg, err := config.Load(cfgPath)
@@ -66,6 +71,12 @@ func Run(args []string, ver version.Info) (int, error) {
 	switch cmd {
 	case "hash":
 		return runHash(remaining[1:], cfg, logger)
+	case "run":
+		return runJob(remaining[1:], cfg, logger, stateDir, ver.String())
+	case "list":
+		return listJobs(cfg)
+	case "status":
+		return jobStatus(cfg, stateDir)
 	default:
 		return 2, fmt.Errorf("unknown command: %s", cmd)
 	}
@@ -103,11 +114,15 @@ func runHash(args []string, cfg config.Config, logger *logging.Logger) (int, err
 func printUsage(w io.Writer) {
 	fmt.Fprintln(w, "orchastration - cross-platform orchestration helper")
 	fmt.Fprintln(w, "\nUsage:")
-	fmt.Fprintln(w, "  orchastration [--config path] <command> [options]")
+	fmt.Fprintln(w, "  orchastration [--config path] [--state-dir path] <command> [options]")
 	fmt.Fprintln(w, "\nCommands:")
 	fmt.Fprintln(w, "  hash   Compute file hash (useful for integrity checks)")
+	fmt.Fprintln(w, "  run    Run a configured job by name")
+	fmt.Fprintln(w, "  list   List configured jobs")
+	fmt.Fprintln(w, "  status Show last recorded job runs")
 	fmt.Fprintln(w, "\nFlags:")
 	fmt.Fprintln(w, "  --help       Show help")
 	fmt.Fprintln(w, "  --version    Show version")
 	fmt.Fprintln(w, "  --config     Path to config file")
+	fmt.Fprintln(w, "  --state-dir  Path to state directory")
 }

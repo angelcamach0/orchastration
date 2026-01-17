@@ -1,12 +1,12 @@
 # Orchastration
 
-Orchastration is a cross-platform CLI for small operational workflows. The initial command computes file hashes for integrity checks and automation pipelines.
+Orchastration is a cross-platform CLI that orchestrates deterministic, auditable execution of user-defined jobs on a single machine. It also provides a file hashing command for integrity checks.
 
 ## Features
 - Native binaries for Windows and Linux
 - Structured logging to stdout and a log file
 - OS-appropriate config and log locations
-- Simple, extensible command layout
+- Deterministic, auditable job execution with local state records
 
 ## Install
 
@@ -47,6 +47,9 @@ This produces `dist\orchastration-<version>-windows-amd64.zip`.
 orchastration --help
 orchastration --version
 orchastration hash --file ./path/to/file
+orchastration list
+orchastration run sample
+orchastration status
 ```
 
 ## Configuration
@@ -56,10 +59,18 @@ The config file is optional. If missing, defaults are used.
 
 Example config: `configs/config.example.toml`
 
+## State
+Execution records are stored under an OS-appropriate state directory (override with `--state-dir`):
+- Linux: `$XDG_CACHE_HOME/orchastration/state` (falls back to `~/.cache/orchastration/state`)
+- Windows: `%LocalAppData%\\orchastration\\state`
+
+Each run is recorded under:
+`state/runs/<job-name>/<timestamp>.json` and `state/runs/<job-name>/last.json`
+
 ## Logging
 Logs are JSON and written to stdout and a log file:
 - Linux: `$XDG_CACHE_HOME/orchastration/orchastration.log` (falls back to `~/.cache/orchastration/orchastration.log`)
-- Windows: `%LocalAppData%\orchastration\orchastration.log`
+- Windows: `%LocalAppData%\\orchastration\\orchastration.log`
 
 ## Permissions
 Runs as a normal user. It only needs read access to files you hash and write access to your user config/cache directories.
