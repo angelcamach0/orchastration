@@ -155,6 +155,9 @@ func validateTaskConfig(name string, task config.TaskConfig) error {
 	if task.WorkingDir == "" {
 		return fmt.Errorf("task %s has empty working_dir", name)
 	}
+	if !filepath.IsAbs(task.WorkingDir) {
+		return fmt.Errorf("task %s working_dir must be absolute", name)
+	}
 	if len(task.Command) == 0 {
 		return fmt.Errorf("task %s has empty command", name)
 	}

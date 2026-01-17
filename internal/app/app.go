@@ -75,6 +75,8 @@ func Run(args []string, ver version.Info) (int, error) {
 		return runJob(remaining[1:], cfg, logger, stateDir, ver.String())
 	case "plan":
 		return runPlan(remaining[1:], cfg, logger, stateDir)
+	case "build":
+		return runBuild(remaining[1:], cfg, logger, stateDir)
 	case "list":
 		return listJobs(cfg)
 	case "status":
@@ -123,6 +125,7 @@ func printUsage(w io.Writer) {
 	fmt.Fprintln(w, "  list   List configured jobs")
 	fmt.Fprintln(w, "  status Show last recorded job runs")
 	fmt.Fprintln(w, "  plan   Plan workflow tasks (list, create, status)")
+	fmt.Fprintln(w, "  build  Run workflow tasks")
 	fmt.Fprintln(w, "\nFlags:")
 	fmt.Fprintln(w, "  --help       Show help")
 	fmt.Fprintln(w, "  --version    Show version")
