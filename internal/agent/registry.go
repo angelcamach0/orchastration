@@ -104,6 +104,11 @@ func List() []Info {
 	return defaultRegistry.List()
 }
 
+// DefaultRegistry returns the default registry used by the CLI.
+func DefaultRegistry() *Registry {
+	return defaultRegistry
+}
+
 func init() {
 	MustRegister("PlannerAgent", func() Agent { return &PlannerAgent{} })
 	MustRegister("BuilderAgent", func() Agent { return &BuilderAgent{} })
