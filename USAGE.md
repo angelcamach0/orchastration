@@ -62,6 +62,8 @@ Copy-Item -Force configs\config.example.toml "$env:AppData\orchastration\config.
 ./dist/orchastration git branch create sample_task
 ```
 
+`plan create` initializes the task record under `state/tasks/<task>.json` and logs a run entry under `state/runs/<task>/`.
+
 ## Commands
 
 - `orchastration list`: show configured jobs
