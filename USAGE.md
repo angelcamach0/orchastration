@@ -6,7 +6,7 @@ This guide walks through running Orchastration locally on a single machine.
 
 ![User Ideology and Journey](docs/diagrams/Orchastration%201-User%20Ideology%20%26%20Journey%20Diagram.svg)
 
-Start in a terminal with Codex available to help draft tasks, commands, and expected outputs. You clone or open the target repository, then define tasks in Orchastration’s config with explicit `working_dir` and argv-style `command`. Orchastration is the tool that runs `plan`, `build`, and `doc`, while Codex supports you with planning or documentation edits as needed. Each cycle produces state records and documentation, creating a feedback loop that you can repeat until the task is complete. The workflow is task-driven and auditable, with intent captured before execution and outcomes recorded after.
+Start in a terminal with Codex available to help draft tasks, commands, and expected outputs. You clone or open the target repository, then define tasks in Orchastration’s config with explicit `working_dir` and argv-style `command`. Orchastration runs tasks directly (`plan`, `build`, `doc`) or via orchestration pipelines that coordinate Planner -> Builder -> Reviewer -> Doc. Each cycle produces state records and documentation, creating a feedback loop that you can repeat until the task is complete. The workflow is task-driven and auditable, with intent captured before execution and outcomes recorded after.
 
 ## Build
 
@@ -71,9 +71,10 @@ Copy-Item -Force configs\config.example.toml "$env:AppData\orchastration\config.
 ./dist/orchastration agent list
 ./dist/orchastration orchestration list
 ./dist/orchastration orchestration run hello_multi_agent --goal "Implement login endpoint"
+./dist/orchastration orchestration run hello_multi_agent --task hello_multi_agent
 ```
 
-Orchestration runs execute a multi-agent pipeline (Planner -> Builder -> Reviewer -> Doc) and record a shared context snapshot in `state/orchestrations/`.
+Orchestration runs execute a multi-agent pipeline (Planner -> Builder -> Reviewer -> Doc), optionally in parallel groups, and record a shared context snapshot in `state/orchestrations/`.
 
 ## Commands
 
@@ -130,6 +131,18 @@ steps = [
   ["DocAgent"],
 ]
 description = "Parallel build/review step example"
+```
+
+Orchestration tasks are defined under `tasks` (a single orchestration can target a task via `--task`):
+```toml
+[tasks.hello_multi_agent]
+description = "Example task for the multi-agent orchestration"
+repo = "orchastration"
+working_dir = "/absolute/path"
+command = ["echo", "hello from orchestration"]
+outputs = ["dist/orchestration.txt"]
+documents = ["README.md"]
+status = "planned"
 ```
 
 ## State Records
