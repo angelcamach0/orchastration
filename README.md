@@ -79,7 +79,7 @@ orchastration git issue create sample_task
 orchastration git branch create sample_task
 orchastration agent list
 orchastration orchestration list
-orchastration orchestration run hello_multi_agent
+orchastration orchestration run hello_multi_agent --goal "Implement login endpoint"
 ```
 
 For a step-by-step walkthrough, see `USAGE.md`.

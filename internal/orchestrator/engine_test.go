@@ -60,7 +60,7 @@ func TestEngineRunSequentialOrder(t *testing.T) {
 		{"BuilderAgent"},
 		{"ReviewerAgent"},
 		{"DocAgent"},
-	}, stateDir); err != nil {
+	}, stateDir, nil); err != nil {
 		t.Fatalf("run: %v", err)
 	}
 
@@ -131,7 +131,7 @@ func TestEngineRunParallelGroup(t *testing.T) {
 	go func() {
 		errCh <- engine.Run("parallel", [][]string{
 			{"BuilderAgent", "ReviewerAgent"},
-		}, stateDir)
+		}, stateDir, nil)
 	}()
 
 	for i := 0; i < 2; i++ {

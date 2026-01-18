@@ -31,6 +31,15 @@ outputs = ["dist/example.txt"]
 documents = ["README.md"]
 status = "planned"
 
+[tasks.hello_multi_agent]
+description = "Example task for the multi-agent orchestration"
+repo = "orchastration"
+working_dir = "/absolute/path"
+command = ["echo", "hello from orchestration"]
+outputs = ["dist/orchestration.txt"]
+documents = ["README.md"]
+status = "planned"
+
 [agents.PlannerAgent]
 
 [agents.BuilderAgent]

@@ -70,7 +70,7 @@ Copy-Item -Force configs\config.example.toml "$env:AppData\orchastration\config.
 ```bash
 ./dist/orchastration agent list
 ./dist/orchastration orchestration list
-./dist/orchastration orchestration run hello_multi_agent
+./dist/orchastration orchestration run hello_multi_agent --goal "Implement login endpoint"
 ```
 
 ## Commands
@@ -88,6 +88,8 @@ Copy-Item -Force configs\config.example.toml "$env:AppData\orchastration\config.
 - `orchastration agent list`: list registered agents
 - `orchastration orchestration list`: list configured orchestrations
 - `orchastration orchestration run <name>`: run an orchestration by name
+- `orchastration orchestration run <name> --goal "<text>"`: pass a high-level goal to the planner
+- `orchastration orchestration run <name> --task <task>`: choose the task for build/review/doc agents
 - `orchastration hash --file <path>`: compute file hash
 - `orchastration --help`: show help
 - `orchastration --version`: show version
