@@ -42,6 +42,14 @@ status = "planned"
 [orchestrations.hello_multi_agent]
 agents = ["PlannerAgent", "BuilderAgent", "ReviewerAgent", "DocAgent"]
 description = "Example orchestration: plan, build, review, document"
+
+[orchestrations.parallel_example]
+steps = [
+  ["PlannerAgent"],
+  ["BuilderAgent", "ReviewerAgent"],
+  ["DocAgent"],
+]
+description = "Parallel build/review step example"
 ```
 
 ## Options
@@ -61,6 +69,7 @@ description = "Example orchestration: plan, build, review, document"
 - `tasks.<task>.status`: `planned`, `in_progress`, `done`
 - `agents.<name>`: reserved for agent-specific config
 - `orchestrations.<name>.agents`: ordered list of agent names to run
+- `orchestrations.<name>.steps`: nested agent lists (each inner list runs in parallel)
 - `orchestrations.<name>.description`: human description of the orchestration
 
 Task state is stored under `state/tasks/<task>.json` in the OS-appropriate state directory.

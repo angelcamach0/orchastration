@@ -23,6 +23,7 @@ type OrchestrationRunRecord struct {
 	EndTime       string           `json:"end_time"`
 	DurationMs    int64            `json:"duration_ms"`
 	Status        string           `json:"status"`
+	Context       map[string]string `json:"context,omitempty"`
 }
 
 func WriteOrchestrationRun(path string, record OrchestrationRunRecord) error {

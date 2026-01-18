@@ -4,6 +4,7 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+	"time"
 
 	"orchastration/internal/agent"
 	"orchastration/internal/state"
@@ -54,11 +55,11 @@ func TestEngineRunSequentialOrder(t *testing.T) {
 	engine := NewOrchestrationEngine(reg)
 	stateDir := t.TempDir()
 
-	if err := engine.Run("pipeline", []string{
-		"PlannerAgent",
-		"BuilderAgent",
-		"ReviewerAgent",
-		"DocAgent",
+	if err := engine.Run("pipeline", [][]string{
+		{"PlannerAgent"},
+		{"BuilderAgent"},
+		{"ReviewerAgent"},
+		{"DocAgent"},
 	}, stateDir); err != nil {
 		t.Fatalf("run: %v", err)
 	}
@@ -101,4 +102,101 @@ func TestEngineRunSequentialOrder(t *testing.T) {
 			t.Fatalf("unexpected agent record order: %v", record.Agents)
 		}
 	}
+}
+
+func TestEngineRunParallelGroup(t *testing.T) {
+	reg := agent.NewRegistry()
+	started := make(chan string, 2)
+	release := make(chan struct{})
+
+	register := func(name string) {
+		if err := reg.Register(name, func() agent.Agent {
+			return &blockingAgent{
+				name:    name,
+				started: started,
+				release: release,
+			}
+		}); err != nil {
+			t.Fatalf("register %s: %v", name, err)
+		}
+	}
+
+	register("BuilderAgent")
+	register("ReviewerAgent")
+
+	engine := NewOrchestrationEngine(reg)
+	stateDir := t.TempDir()
+
+	errCh := make(chan error, 1)
+	go func() {
+		errCh <- engine.Run("parallel", [][]string{
+			{"BuilderAgent", "ReviewerAgent"},
+		}, stateDir)
+	}()
+
+	for i := 0; i < 2; i++ {
+		select {
+		case <-started:
+		case <-time.After(2 * time.Second):
+			t.Fatalf("timeout waiting for agent start")
+		}
+	}
+	close(release)
+
+	select {
+	case err := <-errCh:
+		if err != nil {
+			t.Fatalf("run: %v", err)
+		}
+	case <-time.After(2 * time.Second):
+		t.Fatalf("timeout waiting for run completion")
+	}
+
+	runDir := filepath.Join(stateDir, "orchestrations", "parallel")
+	entries, err := os.ReadDir(runDir)
+	if err != nil {
+		t.Fatalf("read run dir: %v", err)
+	}
+	if len(entries) != 1 {
+		t.Fatalf("expected 1 run record, got %d", len(entries))
+	}
+
+	recordPath := filepath.Join(runDir, entries[0].Name())
+	record, err := state.ReadOrchestrationRun(recordPath)
+	if err != nil {
+		t.Fatalf("read record: %v", err)
+	}
+	if record.Status != "success" {
+		t.Fatalf("unexpected status: %s", record.Status)
+	}
+	if len(record.Agents) != 2 {
+		t.Fatalf("expected 2 agent records, got %d", len(record.Agents))
+	}
+	if record.Context["agent.BuilderAgent"] != "done" {
+		t.Fatalf("missing BuilderAgent context")
+	}
+	if record.Context["agent.ReviewerAgent"] != "done" {
+		t.Fatalf("missing ReviewerAgent context")
+	}
+}
+
+type blockingAgent struct {
+	name    string
+	started chan<- string
+	release <-chan struct{}
+}
+
+func (a *blockingAgent) Name() string {
+	return a.name
+}
+
+func (a *blockingAgent) Capabilities() []string {
+	return []string{"block until released"}
+}
+
+func (a *blockingAgent) Execute(ctx *agent.OrchContext) error {
+	ctx.Set("agent."+a.name, "done")
+	a.started <- a.name
+	<-a.release
+	return nil
 }
