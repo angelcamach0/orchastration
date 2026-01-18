@@ -30,7 +30,7 @@ func NewOrchestrationEngine(registry *agent.Registry) *OrchestrationEngine {
 }
 
 // Run executes agents sequentially or concurrently based on step groups.
-func (e *OrchestrationEngine) Run(orchestration string, steps [][]string, stateDir string) error {
+func (e *OrchestrationEngine) Run(orchestration string, steps [][]string, stateDir string, ctx *agent.OrchContext) error {
 	if orchestration == "" {
 		return errors.New("orchestration name is required")
 	}
@@ -49,7 +49,9 @@ func (e *OrchestrationEngine) Run(orchestration string, steps [][]string, stateD
 		registry = agent.DefaultRegistry()
 	}
 
-	ctx := &agent.OrchContext{}
+	if ctx == nil {
+		ctx = &agent.OrchContext{}
+	}
 	start := e.now().UTC()
 	agentRuns := make([]state.AgentRunRecord, 0, len(steps))
 	status := "success"

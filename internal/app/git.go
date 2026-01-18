@@ -13,6 +13,7 @@ import (
 	"orchastration/internal/config"
 	"orchastration/internal/logging"
 	"orchastration/internal/state"
+	"orchastration/internal/taskflow"
 )
 
 func runGit(args []string, cfg config.Config, logger *logging.Logger, stateDir string) (int, error) {
@@ -41,7 +42,7 @@ func gitIssue(args []string, cfg config.Config, logger *logging.Logger, stateDir
 	if !ok {
 		return 2, fmt.Errorf("unknown task: %s", name)
 	}
-	if err := validateTaskConfig(name, taskCfg); err != nil {
+	if err := taskflow.ValidateTaskConfig(name, taskCfg); err != nil {
 		return 2, err
 	}
 
@@ -58,10 +59,10 @@ func gitIssue(args []string, cfg config.Config, logger *logging.Logger, stateDir
 	end := time.Now().UTC()
 
 	status := resolveTaskStatus(stateDir, name, taskCfg)
-	if err := updateTaskState(stateDir, name, taskCfg, status, end); err != nil {
+	if err := taskflow.UpdateTaskState(stateDir, name, taskCfg, status, end); err != nil {
 		return 2, err
 	}
-	if runErr := writeTaskRun(stateDir, name, "git.issue.create", start, end, status, exitCodeFromError(err), strings.TrimSpace(string(output))); runErr != nil {
+	if runErr := taskflow.WriteTaskRun(stateDir, name, "git.issue.create", start, end, status, exitCodeFromError(err), strings.TrimSpace(string(output))); runErr != nil {
 		logger.Error("failed to write git issue run", "task", name, "error", runErr)
 	}
 
@@ -81,7 +82,7 @@ func gitBranch(args []string, cfg config.Config, logger *logging.Logger, stateDi
 	if !ok {
 		return 2, fmt.Errorf("unknown task: %s", name)
 	}
-	if err := validateTaskConfig(name, taskCfg); err != nil {
+	if err := taskflow.ValidateTaskConfig(name, taskCfg); err != nil {
 		return 2, err
 	}
 
@@ -92,10 +93,10 @@ func gitBranch(args []string, cfg config.Config, logger *logging.Logger, stateDi
 	end := time.Now().UTC()
 
 	status := resolveTaskStatus(stateDir, name, taskCfg)
-	if err := updateTaskState(stateDir, name, taskCfg, status, end); err != nil {
+	if err := taskflow.UpdateTaskState(stateDir, name, taskCfg, status, end); err != nil {
 		return 2, err
 	}
-	if runErr := writeTaskRun(stateDir, name, "git.branch.create", start, end, status, exitCodeFromError(err), strings.TrimSpace(string(output))); runErr != nil {
+	if runErr := taskflow.WriteTaskRun(stateDir, name, "git.branch.create", start, end, status, exitCodeFromError(err), strings.TrimSpace(string(output))); runErr != nil {
 		logger.Error("failed to write git branch run", "task", name, "error", runErr)
 	}
 

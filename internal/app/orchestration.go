@@ -2,11 +2,13 @@ package app
 
 import (
 	"errors"
+	"flag"
 	"fmt"
 	"io"
 	"os"
 	"sort"
 
+	"orchastration/internal/agent"
 	"orchastration/internal/config"
 	"orchastration/internal/logging"
 	"orchastration/internal/orchestrator"
@@ -52,11 +54,20 @@ func orchestrationList(w io.Writer, orchestrations map[string]config.Orchestrati
 }
 
 func orchestrationRun(args []string, cfg config.Config, logger *logging.Logger, stateDir string) (int, error) {
-	if len(args) < 1 {
+	fs := flag.NewFlagSet("orchestration run", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	goal := fs.String("goal", "", "high-level goal for the orchestration")
+	task := fs.String("task", "", "task name to execute")
+	if err := fs.Parse(args); err != nil {
+		return 2, err
+	}
+
+	remaining := fs.Args()
+	if len(remaining) < 1 {
 		return 2, errors.New("orchestration run requires a name")
 	}
 
-	name := args[0]
+	name := remaining[0]
 	orchCfg, ok := cfg.Orchestrations[name]
 	if !ok {
 		return 2, fmt.Errorf("unknown orchestration: %s", name)
@@ -66,8 +77,26 @@ func orchestrationRun(args []string, cfg config.Config, logger *logging.Logger, 
 		return 2, fmt.Errorf("orchestration %s has no agents", name)
 	}
 
+	ctx := &agent.OrchContext{}
+	ctx.Set("config", cfg)
+	ctx.Set("logger", logger)
+	ctx.Set("state.dir", stateDir)
+	ctx.Set("writer", os.Stdout)
+	if *goal != "" {
+		ctx.Set("goal", *goal)
+	}
+	taskName := *task
+	if taskName == "" {
+		if _, exists := cfg.Tasks[name]; exists {
+			taskName = name
+		}
+	}
+	if taskName != "" {
+		ctx.Set("task.name", taskName)
+	}
+
 	engine := orchestrator.NewOrchestrationEngine(nil)
-	if err := engine.Run(name, steps, stateDir); err != nil {
+	if err := engine.Run(name, steps, stateDir, ctx); err != nil {
 		logger.Error("orchestration failed", "orchestration", name, "error", err)
 		return 2, err
 	}
