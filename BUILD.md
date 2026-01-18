@@ -28,5 +28,5 @@ Set these environment variables before running a build script:
 
 Example:
 ```bash
-VERSION=1.0.0 COMMIT=$(git rev-parse --short HEAD) BUILDTIME=$(date -u +%Y-%m-%dT%H:%M:%SZ) ./scripts/build-linux.sh
+VERSION=2.0.0 COMMIT=$(git rev-parse --short HEAD) BUILDTIME=$(date -u +%Y-%m-%dT%H:%M:%SZ) ./scripts/build-linux.sh
 ```

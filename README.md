@@ -14,9 +14,9 @@ Orchastration is a cross-platform CLI that orchestrates deterministic, auditable
 
 ## How Orchastration Works
 
-![Orchastration Unified System Diagram](docs/diagrams/Orchastration%200-Unified%20System%20Diagram.svg)
+![Orchastration Internal Architecture v2](docs/diagrams/Orchastration%20F-Internal%20Architecture%20v2.svg)
 
-Orchastration acts as a local workflow agent that coordinates task planning, execution, and documentation without taking ownership of the target repositories. The diagram highlights how Orchastration stays separate from external repos, running commands inside them while keeping state and logs in its own directories. At a high level, Planner, Builder, and Documentor work together to make task intent explicit, run deterministic commands, and capture outcomes. This separation keeps orchestration logic centralized while allowing domain logic to remain in the external project.
+Orchastration acts as a local workflow engine that coordinates task planning, execution, review, and documentation without taking ownership of target repositories. The orchestration engine drives the Planner, Builder, Reviewer, and Doc agents while preserving state and logs in OS-native directories. This separation keeps orchestration logic centralized while allowing domain logic to remain in the external project.
 
 ![Multi-Agent Workflow](docs/diagrams/Orchastration%20E-Multi-Agent%20Workflow.svg)
 
@@ -25,6 +25,10 @@ This workflow represents the multi-agent pipeline that powers v2: Planner decomp
 ![Context Sharing in Parallel](docs/diagrams/Orchastration%20G-Context%20Sharing%20%28Parallel%29.svg)
 
 Parallel agent groups can run concurrently when configured, using the shared context to fan-out and fan-in results safely.
+
+![External Repository Interaction](docs/diagrams/Orchastration%20H-External%20Repository%20Interaction.svg)
+
+Orchastration executes commands in external repositories while keeping orchestration state and logs in its own directories. Outputs and documentation stay in the target repo; Orchastration only records metadata and run state.
 
 ## Features
 - Native binaries for Windows and Linux
