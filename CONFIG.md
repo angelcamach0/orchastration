@@ -47,3 +47,5 @@ status = "planned"
 - `tasks.<task>.outputs`: relative paths expected from the task
 - `tasks.<task>.documents`: documentation files tied to the task
 - `tasks.<task>.status`: `planned`, `in_progress`, `done`
+
+Task state is stored under `state/tasks/<task>.json` in the OS-appropriate state directory.
