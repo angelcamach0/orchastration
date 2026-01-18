@@ -55,6 +55,8 @@ orchastration plan create sample_task
 orchastration plan status sample_task
 orchastration build run sample_task
 orchastration doc generate sample_task
+orchastration git issue create sample_task
+orchastration git branch create sample_task
 ```
 
 For a step-by-step walkthrough, see `USAGE.md`.

@@ -52,6 +52,8 @@ Copy-Item -Force configs\config.example.toml "$env:AppData\orchastration\config.
 ./dist/orchastration plan status sample_task
 ./dist/orchastration build run sample_task
 ./dist/orchastration doc generate sample_task
+./dist/orchastration git issue create sample_task
+./dist/orchastration git branch create sample_task
 ```
 
 ## Commands
@@ -64,6 +66,8 @@ Copy-Item -Force configs\config.example.toml "$env:AppData\orchastration\config.
 - `orchastration plan status <task>`: show task state
 - `orchastration build run <task>`: execute task command
 - `orchastration doc generate <task>`: generate task documentation
+- `orchastration git issue create <task>`: create a GitHub issue using `gh`
+- `orchastration git branch create <task>`: create a git branch for the task
 - `orchastration hash --file <path>`: compute file hash
 - `orchastration --help`: show help
 - `orchastration --version`: show version
