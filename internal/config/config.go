@@ -12,6 +12,8 @@ type Config struct {
 	Hash    HashConfig    `toml:"hash"`
 	Jobs    map[string]JobConfig `toml:"jobs"`
 	Tasks   map[string]TaskConfig `toml:"tasks"`
+	Agents         map[string]AgentConfig         `toml:"agents"`
+	Orchestrations map[string]OrchestrationConfig `toml:"orchestrations"`
 }
 
 type LoggingConfig struct {
@@ -38,6 +40,13 @@ type TaskConfig struct {
 	Outputs     []string `toml:"outputs"`
 	Documents   []string `toml:"documents"`
 	Status      string   `toml:"status"`
+}
+
+type AgentConfig struct{}
+
+type OrchestrationConfig struct {
+	Agents      []string `toml:"agents"`
+	Description string   `toml:"description"`
 }
 
 func Default() Config {

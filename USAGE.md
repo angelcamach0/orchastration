@@ -66,6 +66,13 @@ Copy-Item -Force configs\config.example.toml "$env:AppData\orchastration\config.
 `build run` executes the task command in `working_dir`, updates task status, and logs a run record under `state/runs/<task>/`.
 `doc generate` appends a task summary to the target repo `README.md` and writes `docs/tasks/<task>.md` under the task `working_dir`.
 
+6. Inspect available agents and run an orchestration:
+```bash
+./dist/orchastration agent list
+./dist/orchastration orchestration list
+./dist/orchastration orchestration run hello_multi_agent
+```
+
 ## Commands
 
 - `orchastration list`: show configured jobs
@@ -78,6 +85,9 @@ Copy-Item -Force configs\config.example.toml "$env:AppData\orchastration\config.
 - `orchastration doc generate <task>`: generate task documentation
 - `orchastration git issue create <task>`: create a GitHub issue using `gh`
 - `orchastration git branch create <task>`: create a git branch for the task
+- `orchastration agent list`: list registered agents
+- `orchastration orchestration list`: list configured orchestrations
+- `orchastration orchestration run <name>`: run an orchestration by name
 - `orchastration hash --file <path>`: compute file hash
 - `orchastration --help`: show help
 - `orchastration --version`: show version
@@ -107,6 +117,11 @@ Each run writes JSON records under the state directory:
 ```
 state/runs/<job-name>/<timestamp>.json
 state/runs/<job-name>/last.json
+```
+
+Orchestration runs are stored under:
+```
+state/orchestrations/<name>/<timestamp>.json
 ```
 
 State directory locations (defaults):

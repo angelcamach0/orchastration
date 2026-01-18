@@ -77,6 +77,9 @@ orchastration build run sample_task
 orchastration doc generate sample_task
 orchastration git issue create sample_task
 orchastration git branch create sample_task
+orchastration agent list
+orchastration orchestration list
+orchastration orchestration run hello_multi_agent
 ```
 
 For a step-by-step walkthrough, see `USAGE.md`.
@@ -98,6 +101,9 @@ Job runs are recorded under:
 
 Task state is recorded under:
 `state/tasks/<task>.json` and task runs under `state/runs/<task>/<timestamp>.json`
+
+Orchestration runs are recorded under:
+`state/orchestrations/<name>/<timestamp>.json`
 
 ## Logging
 Logs are JSON and written to stdout and a log file:

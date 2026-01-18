@@ -30,6 +30,18 @@ command = ["echo", "hello"]
 outputs = ["dist/example.txt"]
 documents = ["README.md"]
 status = "planned"
+
+[agents.PlannerAgent]
+
+[agents.BuilderAgent]
+
+[agents.ReviewerAgent]
+
+[agents.DocAgent]
+
+[orchestrations.hello_multi_agent]
+agents = ["PlannerAgent", "BuilderAgent", "ReviewerAgent", "DocAgent"]
+description = "Example orchestration: plan, build, review, document"
 ```
 
 ## Options
@@ -47,5 +59,8 @@ status = "planned"
 - `tasks.<task>.outputs`: relative paths expected from the task
 - `tasks.<task>.documents`: documentation files tied to the task
 - `tasks.<task>.status`: `planned`, `in_progress`, `done`
+- `agents.<name>`: reserved for agent-specific config
+- `orchestrations.<name>.agents`: ordered list of agent names to run
+- `orchestrations.<name>.description`: human description of the orchestration
 
 Task state is stored under `state/tasks/<task>.json` in the OS-appropriate state directory.
