@@ -41,17 +41,18 @@ func docGenerate(args []string, cfg config.Config, logger *logging.Logger, state
 	}
 
 	start := time.Now().UTC()
+	baseDir := taskCfg.WorkingDir
 	status := "done"
 	if err := updateTaskState(stateDir, name, taskCfg, status, start); err != nil {
 		return 2, err
 	}
 
-	if err := appendTaskSummary(name, taskCfg, status); err != nil {
+	if err := appendTaskSummary(baseDir, name, taskCfg, status); err != nil {
 		logger.Error("failed to update README", "task", name, "error", err)
 		return 2, err
 	}
 
-	docPath := filepath.Join("docs", "tasks", name+".md")
+	docPath := filepath.Join(baseDir, "docs", "tasks", name+".md")
 	if err := writeTaskDoc(docPath, name, taskCfg, status); err != nil {
 		logger.Error("failed to write task doc", "task", name, "error", err)
 		return 2, err
@@ -67,9 +68,10 @@ func docGenerate(args []string, cfg config.Config, logger *logging.Logger, state
 	return 0, nil
 }
 
-func appendTaskSummary(name string, taskCfg config.TaskConfig, status string) error {
+func appendTaskSummary(baseDir string, name string, taskCfg config.TaskConfig, status string) error {
 	section := buildTaskSummary(name, taskCfg, status)
-	file, err := os.OpenFile("README.md", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o644)
+	readmePath := filepath.Join(baseDir, "README.md")
+	file, err := os.OpenFile(readmePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o644)
 	if err != nil {
 		return fmt.Errorf("open README: %w", err)
 	}
