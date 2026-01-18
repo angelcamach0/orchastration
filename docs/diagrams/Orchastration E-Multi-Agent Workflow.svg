@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="Multi-agent workflow">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#333"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="450" y="28" text-anchor="middle" font-size="18" font-family="Arial" fill="#111">
+    Multi-Agent Workflow
+  </text>
+
+  <rect x="300" y="50" width="300" height="60" fill="#f2f4f8" stroke="#333"/>
+  <text x="450" y="85" text-anchor="middle" font-size="14" font-family="Arial" fill="#111">
+    Orchestration Engine
+  </text>
+
+  <rect x="60" y="150" width="180" height="70" fill="#eaf3ff" stroke="#333"/>
+  <text x="150" y="190" text-anchor="middle" font-size="14" font-family="Arial" fill="#111">Planner</text>
+
+  <rect x="260" y="150" width="180" height="70" fill="#eaf3ff" stroke="#333"/>
+  <text x="350" y="190" text-anchor="middle" font-size="14" font-family="Arial" fill="#111">Builder</text>
+
+  <rect x="460" y="150" width="180" height="70" fill="#eaf3ff" stroke="#333"/>
+  <text x="550" y="190" text-anchor="middle" font-size="14" font-family="Arial" fill="#111">Reviewer</text>
+
+  <rect x="660" y="150" width="180" height="70" fill="#eaf3ff" stroke="#333"/>
+  <text x="750" y="190" text-anchor="middle" font-size="14" font-family="Arial" fill="#111">Doc</text>
+
+  <rect x="200" y="300" width="500" height="90" fill="#fef6e4" stroke="#333"/>
+  <text x="450" y="350" text-anchor="middle" font-size="14" font-family="Arial" fill="#111">
+    Shared OrchContext (plan, outputs, review, docs)
+  </text>
+
+  <line x1="450" y1="110" x2="150" y2="150" stroke="#333" marker-end="url(#arrow)"/>
+  <line x1="450" y1="110" x2="350" y2="150" stroke="#333" marker-end="url(#arrow)"/>
+  <line x1="450" y1="110" x2="550" y2="150" stroke="#333" marker-end="url(#arrow)"/>
+  <line x1="450" y1="110" x2="750" y2="150" stroke="#333" marker-end="url(#arrow)"/>
+
+  <line x1="150" y1="220" x2="300" y2="300" stroke="#333" marker-end="url(#arrow)"/>
+  <line x1="350" y1="220" x2="380" y2="300" stroke="#333" marker-end="url(#arrow)"/>
+  <line x1="550" y1="220" x2="520" y2="300" stroke="#333" marker-end="url(#arrow)"/>
+  <line x1="750" y1="220" x2="600" y2="300" stroke="#333" marker-end="url(#arrow)"/>
+</svg>

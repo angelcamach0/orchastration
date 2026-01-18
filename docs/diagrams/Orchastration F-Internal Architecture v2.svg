@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" role="img" aria-label="Internal architecture v2">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#333"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="450" y="28" text-anchor="middle" font-size="18" font-family="Arial" fill="#111">
+    Internal Architecture (v2)
+  </text>
+
+  <rect x="40" y="70" width="220" height="60" fill="#f2f4f8" stroke="#333"/>
+  <text x="150" y="105" text-anchor="middle" font-size="14" font-family="Arial" fill="#111">cmd/orchastration</text>
+
+  <rect x="300" y="70" width="220" height="60" fill="#eaf3ff" stroke="#333"/>
+  <text x="410" y="105" text-anchor="middle" font-size="14" font-family="Arial" fill="#111">internal/app</text>
+
+  <rect x="560" y="70" width="300" height="60" fill="#fef6e4" stroke="#333"/>
+  <text x="710" y="105" text-anchor="middle" font-size="14" font-family="Arial" fill="#111">Orchestration Engine</text>
+
+  <rect x="120" y="180" width="220" height="60" fill="#f2f4f8" stroke="#333"/>
+  <text x="230" y="215" text-anchor="middle" font-size="14" font-family="Arial" fill="#111">Config / Logging</text>
+
+  <rect x="380" y="180" width="220" height="60" fill="#f2f4f8" stroke="#333"/>
+  <text x="490" y="215" text-anchor="middle" font-size="14" font-family="Arial" fill="#111">Agent Registry</text>
+
+  <rect x="640" y="180" width="220" height="60" fill="#f2f4f8" stroke="#333"/>
+  <text x="750" y="215" text-anchor="middle" font-size="14" font-family="Arial" fill="#111">State Store</text>
+
+  <rect x="120" y="300" width="160" height="60" fill="#eaf3ff" stroke="#333"/>
+  <text x="200" y="335" text-anchor="middle" font-size="14" font-family="Arial" fill="#111">Planner</text>
+
+  <rect x="300" y="300" width="160" height="60" fill="#eaf3ff" stroke="#333"/>
+  <text x="380" y="335" text-anchor="middle" font-size="14" font-family="Arial" fill="#111">Builder</text>
+
+  <rect x="480" y="300" width="160" height="60" fill="#eaf3ff" stroke="#333"/>
+  <text x="560" y="335" text-anchor="middle" font-size="14" font-family="Arial" fill="#111">Reviewer</text>
+
+  <rect x="660" y="300" width="160" height="60" fill="#eaf3ff" stroke="#333"/>
+  <text x="740" y="335" text-anchor="middle" font-size="14" font-family="Arial" fill="#111">Doc</text>
+
+  <rect x="250" y="420" width="400" height="70" fill="#fef6e4" stroke="#333"/>
+  <text x="450" y="462" text-anchor="middle" font-size="14" font-family="Arial" fill="#111">Shared OrchContext</text>
+
+  <line x1="260" y1="100" x2="300" y2="100" stroke="#333" marker-end="url(#arrow)"/>
+  <line x1="520" y1="100" x2="560" y2="100" stroke="#333" marker-end="url(#arrow)"/>
+  <line x1="410" y1="130" x2="410" y2="180" stroke="#333" marker-end="url(#arrow)"/>
+  <line x1="710" y1="130" x2="710" y2="180" stroke="#333" marker-end="url(#arrow)"/>
+  <line x1="450" y1="130" x2="230" y2="180" stroke="#333" marker-end="url(#arrow)"/>
+
+  <line x1="490" y1="240" x2="200" y2="300" stroke="#333" marker-end="url(#arrow)"/>
+  <line x1="490" y1="240" x2="380" y2="300" stroke="#333" marker-end="url(#arrow)"/>
+  <line x1="490" y1="240" x2="560" y2="300" stroke="#333" marker-end="url(#arrow)"/>
+  <line x1="490" y1="240" x2="740" y2="300" stroke="#333" marker-end="url(#arrow)"/>
+
+  <line x1="200" y1="360" x2="330" y2="420" stroke="#333" marker-end="url(#arrow)"/>
+  <line x1="380" y1="360" x2="400" y2="420" stroke="#333" marker-end="url(#arrow)"/>
+  <line x1="560" y1="360" x2="500" y2="420" stroke="#333" marker-end="url(#arrow)"/>
+  <line x1="740" y1="360" x2="570" y2="420" stroke="#333" marker-end="url(#arrow)"/>
+
+  <line x1="650" y1="455" x2="750" y2="240" stroke="#333" marker-end="url(#arrow)"/>
+</svg>

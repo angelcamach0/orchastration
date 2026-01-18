@@ -18,15 +18,20 @@ Orchastration is a cross-platform CLI that orchestrates deterministic, auditable
 
 Orchastration acts as a local workflow agent that coordinates task planning, execution, and documentation without taking ownership of the target repositories. The diagram highlights how Orchastration stays separate from external repos, running commands inside them while keeping state and logs in its own directories. At a high level, Planner, Builder, and Documentor work together to make task intent explicit, run deterministic commands, and capture outcomes. This separation keeps orchestration logic centralized while allowing domain logic to remain in the external project.
 
-![Planner Builder Documentor Loop](docs/diagrams/Orchastration%20C-Planner%20%E2%86%92%20Builder%20%E2%86%92%20Documentor%20Loop%20%28Core%20Value%29.svg)
+![Multi-Agent Workflow](docs/diagrams/Orchastration%20E-Multi-Agent%20Workflow.svg)
 
-This loop represents the repeatable lifecycle of a task from plan to build to documentation. Planning establishes intent before any command runs, building executes the scoped command with explicit inputs, and documentation records results as a first-class output. The cycle is designed to be auditable and repeatable so that outcomes can be recreated and reviewed. Documentation is not an afterthought; it is the final, required step in the loop.
+This workflow represents the multi-agent pipeline that powers v2: Planner decomposes goals, Builder executes tasks, Reviewer validates outputs, and Doc captures results. A shared OrchContext carries the plan, outputs, review results, and documentation references across stages.
+
+![Context Sharing in Parallel](docs/diagrams/Orchastration%20G-Context%20Sharing%20%28Parallel%29.svg)
+
+Parallel agent groups can run concurrently when configured, using the shared context to fan-out and fan-in results safely.
 
 ## Features
 - Native binaries for Windows and Linux
 - Structured logging to stdout and a log file
 - OS-appropriate config and log locations
 - Deterministic, auditable job and task execution with local state records
+- Multi-agent orchestration with sequential or parallel agent pipelines
 
 ## Install
 

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-label="Context sharing in parallel">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#333"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="450" y="28" text-anchor="middle" font-size="18" font-family="Arial" fill="#111">
+    Context Sharing for Parallel Agents
+  </text>
+
+  <rect x="80" y="80" width="220" height="70" fill="#eaf3ff" stroke="#333"/>
+  <text x="190" y="120" text-anchor="middle" font-size="14" font-family="Arial" fill="#111">Builder Agent</text>
+
+  <rect x="600" y="80" width="220" height="70" fill="#eaf3ff" stroke="#333"/>
+  <text x="710" y="120" text-anchor="middle" font-size="14" font-family="Arial" fill="#111">Reviewer Agent</text>
+
+  <rect x="250" y="220" width="400" height="90" fill="#fef6e4" stroke="#333"/>
+  <text x="450" y="270" text-anchor="middle" font-size="14" font-family="Arial" fill="#111">
+    Shared OrchContext (thread-safe)
+  </text>
+
+  <rect x="350" y="360" width="200" height="70" fill="#eaf3ff" stroke="#333"/>
+  <text x="450" y="400" text-anchor="middle" font-size="14" font-family="Arial" fill="#111">Doc Agent</text>
+
+  <line x1="190" y1="150" x2="350" y2="220" stroke="#333" marker-end="url(#arrow)"/>
+  <line x1="710" y1="150" x2="550" y2="220" stroke="#333" marker-end="url(#arrow)"/>
+
+  <line x1="450" y1="310" x2="450" y2="360" stroke="#333" marker-end="url(#arrow)"/>
+</svg>
