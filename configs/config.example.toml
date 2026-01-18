@@ -31,3 +31,11 @@ status = "planned"
 [orchestrations.hello_multi_agent]
 agents = ["PlannerAgent", "BuilderAgent", "ReviewerAgent", "DocAgent"]
 description = "Example orchestration: plan, build, review, document"
+
+[orchestrations.parallel_example]
+steps = [
+  ["PlannerAgent"],
+  ["BuilderAgent", "ReviewerAgent"],
+  ["DocAgent"],
+]
+description = "Parallel build/review step example"

@@ -61,14 +61,26 @@ func orchestrationRun(args []string, cfg config.Config, logger *logging.Logger, 
 	if !ok {
 		return 2, fmt.Errorf("unknown orchestration: %s", name)
 	}
-	if len(orchCfg.Agents) == 0 {
+	steps := buildOrchestrationSteps(orchCfg)
+	if len(steps) == 0 {
 		return 2, fmt.Errorf("orchestration %s has no agents", name)
 	}
 
 	engine := orchestrator.NewOrchestrationEngine(nil)
-	if err := engine.Run(name, orchCfg.Agents, stateDir); err != nil {
+	if err := engine.Run(name, steps, stateDir); err != nil {
 		logger.Error("orchestration failed", "orchestration", name, "error", err)
 		return 2, err
 	}
 	return 0, nil
+}
+
+func buildOrchestrationSteps(cfg config.OrchestrationConfig) [][]string {
+	if len(cfg.Steps) != 0 {
+		return cfg.Steps
+	}
+	steps := make([][]string, 0, len(cfg.Agents))
+	for _, name := range cfg.Agents {
+		steps = append(steps, []string{name})
+	}
+	return steps
 }

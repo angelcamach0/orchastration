@@ -46,6 +46,7 @@ type AgentConfig struct{}
 
 type OrchestrationConfig struct {
 	Agents      []string `toml:"agents"`
+	Steps       [][]string `toml:"steps"`
 	Description string   `toml:"description"`
 }
 

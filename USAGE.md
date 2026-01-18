@@ -111,6 +111,23 @@ timeout_seconds = 10
 env = { SAMPLE_ENV = "true" }
 ```
 
+## Orchestration Configuration
+
+Orchestrations define agent pipelines in `config.toml`:
+```toml
+[orchestrations.hello_multi_agent]
+agents = ["PlannerAgent", "BuilderAgent", "ReviewerAgent", "DocAgent"]
+description = "Example orchestration: plan, build, review, document"
+
+[orchestrations.parallel_example]
+steps = [
+  ["PlannerAgent"],
+  ["BuilderAgent", "ReviewerAgent"],
+  ["DocAgent"],
+]
+description = "Parallel build/review step example"
+```
+
 ## State Records
 
 Each run writes JSON records under the state directory:
