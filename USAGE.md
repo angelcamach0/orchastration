@@ -82,6 +82,8 @@ Copy-Item -Force configs\config.example.toml "$env:AppData\orchastration\config.
 - `orchastration --help`: show help
 - `orchastration --version`: show version
 
+Git helpers require the GitHub CLI (`gh`) to be installed and authenticated, and they only create local branches without force pushing.
+
 ## Global Flags
 
 - `--config <path>`: override config location
