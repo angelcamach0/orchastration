@@ -19,3 +19,15 @@ command = ["echo", "hello"]
 outputs = ["dist/example.txt"]
 documents = ["README.md"]
 status = "planned"
+
+[agents.PlannerAgent]
+
+[agents.BuilderAgent]
+
+[agents.ReviewerAgent]
+
+[agents.DocAgent]
+
+[orchestrations.hello_multi_agent]
+agents = ["PlannerAgent", "BuilderAgent", "ReviewerAgent", "DocAgent"]
+description = "Example orchestration: plan, build, review, document"

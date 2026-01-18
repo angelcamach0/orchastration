@@ -83,6 +83,8 @@ func Run(args []string, ver version.Info) (int, error) {
 		return runGit(remaining[1:], cfg, logger, stateDir)
 	case "agent":
 		return runAgent(remaining[1:], cfg, logger, stateDir)
+	case "orchestration":
+		return runOrchestration(remaining[1:], cfg, logger, stateDir)
 	case "list":
 		return listJobs(cfg)
 	case "status":
@@ -135,6 +137,7 @@ func printUsage(w io.Writer) {
 	fmt.Fprintln(w, "  doc    Generate task documentation")
 	fmt.Fprintln(w, "  git    Git helpers (issue, branch)")
 	fmt.Fprintln(w, "  agent  Agent helpers (list)")
+	fmt.Fprintln(w, "  orchestration  Orchestration helpers (list, run)")
 	fmt.Fprintln(w, "\nFlags:")
 	fmt.Fprintln(w, "  --help       Show help")
 	fmt.Fprintln(w, "  --version    Show version")
