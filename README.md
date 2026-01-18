@@ -2,6 +2,16 @@
 
 Orchastration is a cross-platform CLI that orchestrates deterministic, auditable execution of user-defined jobs and workflow tasks on a single machine. It also provides a file hashing command for integrity checks.
 
+## Contents
+- [How Orchastration Works (Diagrams)](#how-orchastration-works)
+- [Features](#features)
+- [Install](#install)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [State](#state)
+- [Logging](#logging)
+- [Permissions](#permissions)
+
 ## How Orchastration Works
 
 ![Orchastration Unified System Diagram](docs/diagrams/Orchastration%200-Unified%20System%20Diagram.svg)
