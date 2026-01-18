@@ -73,6 +73,8 @@ Copy-Item -Force configs\config.example.toml "$env:AppData\orchastration\config.
 ./dist/orchastration orchestration run hello_multi_agent --goal "Implement login endpoint"
 ```
 
+Orchestration runs execute a multi-agent pipeline (Planner -> Builder -> Reviewer -> Doc) and record a shared context snapshot in `state/orchestrations/`.
+
 ## Commands
 
 - `orchastration list`: show configured jobs

@@ -3,11 +3,23 @@
 ## Overview
 Orchastration follows a small, layered layout that cleanly separates CLI entrypoints, application logic, configuration, logging, OS-specific path handling, and execution state.
 
-## Internal Architecture
+## Internal Architecture (v2)
 
-![Orchastration Internal Architecture](docs/diagrams/Orchastration%20B-Internal%20Architecture.svg)
+![Orchastration Internal Architecture v2](docs/diagrams/Orchastration%20F-Internal%20Architecture%20v2.svg)
 
-This diagram maps directly to the repository layout: `cmd/` hosts the CLI entrypoint, while `internal/app` contains the command handlers and orchestration flow. State persistence lives in `internal/state`, which writes task records and run records under the OS-native state directory. Support modules like `internal/config`, `internal/logging`, and `internal/platform` provide configuration parsing, structured logging, and OS-aware paths without leaking those concerns into the command logic. The result is a clear separation of concerns that keeps orchestration behavior stable and testable.
+This diagram maps directly to the repository layout: `cmd/` hosts the CLI entrypoint, while `internal/app` contains the command handlers and orchestration flow. The new Orchestration Engine in `internal/orchestrator` coordinates the multi-agent pipeline using the Agent Registry in `internal/agent`. State persistence lives in `internal/state`, which writes task records and orchestration run records under the OS-native state directory. Support modules like `internal/config`, `internal/logging`, and `internal/platform` provide configuration parsing, structured logging, and OS-aware paths without leaking those concerns into the command logic. The result is a clear separation of concerns that keeps orchestration behavior stable and testable.
+
+## Multi-Agent Workflow
+
+![Multi-Agent Workflow](docs/diagrams/Orchastration%20E-Multi-Agent%20Workflow.svg)
+
+The orchestration engine runs Planner -> Builder -> Reviewer -> Doc by default, sharing a thread-safe OrchContext that carries plan, outputs, review results, and documentation paths across stages.
+
+## Context Sharing (Parallel)
+
+![Context Sharing in Parallel](docs/diagrams/Orchastration%20G-Context%20Sharing%20%28Parallel%29.svg)
+
+Parallel agent groups can run concurrently when defined in config `steps`. Each agent reads and writes shared context safely, and results are persisted with the orchestration run record.
 
 ### External Repository Interaction
 
