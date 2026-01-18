@@ -1,0 +1,9 @@
+/dist/
+/bin/
+*.log
+*.out
+*.tmp
+.DS_Store
+Thumbs.db
+Designing a Multi‑Agent Orchestration Layer for Orchastration CLI.pdf
+Orchastration v2.0.0_ Multi‑Agent Orchestration Implementation.pdf
