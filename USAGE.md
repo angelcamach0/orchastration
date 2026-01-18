@@ -64,6 +64,7 @@ Copy-Item -Force configs\config.example.toml "$env:AppData\orchastration\config.
 
 `plan create` initializes the task record under `state/tasks/<task>.json` and logs a run entry under `state/runs/<task>/`.
 `build run` executes the task command in `working_dir`, updates task status, and logs a run record under `state/runs/<task>/`.
+`doc generate` appends a task summary to the target repo `README.md` and writes `docs/tasks/<task>.md` under the task `working_dir`.
 
 ## Commands
 
