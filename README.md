@@ -2,6 +2,16 @@
 
 Orchastration is a cross-platform CLI that orchestrates deterministic, auditable execution of user-defined jobs and workflow tasks on a single machine. It also provides a file hashing command for integrity checks.
 
+## How Orchastration Works
+
+![Orchastration Unified System Diagram](docs/diagrams/Orchastration%200-Unified%20System%20Diagram.svg)
+
+Orchastration acts as a local workflow agent that coordinates task planning, execution, and documentation without taking ownership of the target repositories. The diagram highlights how Orchastration stays separate from external repos, running commands inside them while keeping state and logs in its own directories. At a high level, Planner, Builder, and Documentor work together to make task intent explicit, run deterministic commands, and capture outcomes. This separation keeps orchestration logic centralized while allowing domain logic to remain in the external project.
+
+![Planner Builder Documentor Loop](docs/diagrams/Orchastration%20C-Planner%20%E2%86%92%20Builder%20%E2%86%92%20Documentor%20Loop%20%28Core%20Value%29.svg)
+
+This loop represents the repeatable lifecycle of a task from plan to build to documentation. Planning establishes intent before any command runs, building executes the scoped command with explicit inputs, and documentation records results as a first-class output. The cycle is designed to be auditable and repeatable so that outcomes can be recreated and reviewed. Documentation is not an afterthought; it is the final, required step in the loop.
+
 ## Features
 - Native binaries for Windows and Linux
 - Structured logging to stdout and a log file

@@ -2,6 +2,12 @@
 
 This guide walks through running Orchastration locally on a single machine.
 
+## How You Use Orchastration (User Workflow)
+
+![User Ideology and Journey](docs/diagrams/Orchastration%201-User%20Ideology%20%26%20Journey%20Diagram.svg)
+
+Start in a terminal with Codex available to help draft tasks, commands, and expected outputs. You clone or open the target repository, then define tasks in Orchastration’s config with explicit `working_dir` and argv-style `command`. Orchastration is the tool that runs `plan`, `build`, and `doc`, while Codex supports you with planning or documentation edits as needed. Each cycle produces state records and documentation, creating a feedback loop that you can repeat until the task is complete. The workflow is task-driven and auditable, with intent captured before execution and outcomes recorded after.
+
 ## Build
 
 Linux:
