@@ -2,6 +2,12 @@
 
 This guide walks through running Orchastration locally on a single machine.
 
+## How You Use Orchastration (User Workflow)
+
+![User Ideology and Journey](docs/diagrams/Orchastration%201-User%20Ideology%20%26%20Journey%20Diagram.svg)
+
+Start in a terminal with Codex available to help draft tasks, commands, and expected outputs. You clone or open the target repository, then define tasks in Orchastration’s config with explicit `working_dir` and argv-style `command`. Orchastration is the tool that runs `plan`, `build`, and `doc`, while Codex supports you with planning or documentation edits as needed. Each cycle produces state records and documentation, creating a feedback loop that you can repeat until the task is complete. The workflow is task-driven and auditable, with intent captured before execution and outcomes recorded after.
+
 ## Build
 
 Linux:
@@ -45,14 +51,38 @@ Copy-Item -Force configs\config.example.toml "$env:AppData\orchastration\config.
 ./dist/orchastration status
 ```
 
+5. Plan and build a task:
+```bash
+./dist/orchastration plan list
+./dist/orchastration plan create sample_task
+./dist/orchastration plan status sample_task
+./dist/orchastration build run sample_task
+./dist/orchastration doc generate sample_task
+./dist/orchastration git issue create sample_task
+./dist/orchastration git branch create sample_task
+```
+
+`plan create` initializes the task record under `state/tasks/<task>.json` and logs a run entry under `state/runs/<task>/`.
+`build run` executes the task command in `working_dir`, updates task status, and logs a run record under `state/runs/<task>/`.
+`doc generate` appends a task summary to the target repo `README.md` and writes `docs/tasks/<task>.md` under the task `working_dir`.
+
 ## Commands
 
 - `orchastration list`: show configured jobs
 - `orchastration run <job-name>`: execute a job by name
 - `orchastration status`: show last recorded run for each job
+- `orchastration plan list`: list configured tasks
+- `orchastration plan create <task>`: initialize task state
+- `orchastration plan status <task>`: show task state
+- `orchastration build run <task>`: execute task command
+- `orchastration doc generate <task>`: generate task documentation
+- `orchastration git issue create <task>`: create a GitHub issue using `gh`
+- `orchastration git branch create <task>`: create a git branch for the task
 - `orchastration hash --file <path>`: compute file hash
 - `orchastration --help`: show help
 - `orchastration --version`: show version
+
+Git helpers require the GitHub CLI (`gh`) to be installed and authenticated, and they only create local branches without force pushing.
 
 ## Global Flags
 

@@ -10,3 +10,12 @@ command = ["ls", "-la"]
 working_dir = "."
 timeout_seconds = 10
 env = { SAMPLE_ENV = "true" }
+
+[tasks.sample_task]
+description = "Example task definition"
+repo = "orchastration"
+working_dir = "/absolute/path"
+command = ["echo", "hello"]
+outputs = ["dist/example.txt"]
+documents = ["README.md"]
+status = "planned"

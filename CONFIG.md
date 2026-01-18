@@ -21,6 +21,15 @@ command = ["ls", "-la"]
 working_dir = "."
 timeout_seconds = 10
 env = { SAMPLE_ENV = "true" }
+
+[tasks.sample_task]
+description = "Example task definition"
+repo = "orchastration"
+working_dir = "/absolute/path"
+command = ["echo", "hello"]
+outputs = ["dist/example.txt"]
+documents = ["README.md"]
+status = "planned"
 ```
 
 ## Options
@@ -31,3 +40,12 @@ env = { SAMPLE_ENV = "true" }
 - `jobs.<name>.working_dir`: working directory for the command
 - `jobs.<name>.timeout_seconds`: timeout in seconds (0 means no timeout)
 - `jobs.<name>.env`: map of environment variables to add or override
+- `tasks.<task>.description`: task purpose
+- `tasks.<task>.repo`: `orchastration` or `external`
+- `tasks.<task>.working_dir`: absolute working directory for the task
+- `tasks.<task>.command`: array form of the command and arguments (argv)
+- `tasks.<task>.outputs`: relative paths expected from the task
+- `tasks.<task>.documents`: documentation files tied to the task
+- `tasks.<task>.status`: `planned`, `in_progress`, `done`
+
+Task state is stored under `state/tasks/<task>.json` in the OS-appropriate state directory.

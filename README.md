@@ -1,12 +1,32 @@
 # Orchastration
 
-Orchastration is a cross-platform CLI that orchestrates deterministic, auditable execution of user-defined jobs on a single machine. It also provides a file hashing command for integrity checks.
+Orchastration is a cross-platform CLI that orchestrates deterministic, auditable execution of user-defined jobs and workflow tasks on a single machine. It also provides a file hashing command for integrity checks.
+
+## Contents
+- [How Orchastration Works (Diagrams)](#how-orchastration-works)
+- [Features](#features)
+- [Install](#install)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [State](#state)
+- [Logging](#logging)
+- [Permissions](#permissions)
+
+## How Orchastration Works
+
+![Orchastration Unified System Diagram](docs/diagrams/Orchastration%200-Unified%20System%20Diagram.svg)
+
+Orchastration acts as a local workflow agent that coordinates task planning, execution, and documentation without taking ownership of the target repositories. The diagram highlights how Orchastration stays separate from external repos, running commands inside them while keeping state and logs in its own directories. At a high level, Planner, Builder, and Documentor work together to make task intent explicit, run deterministic commands, and capture outcomes. This separation keeps orchestration logic centralized while allowing domain logic to remain in the external project.
+
+![Planner Builder Documentor Loop](docs/diagrams/Orchastration%20C-Planner%20%E2%86%92%20Builder%20%E2%86%92%20Documentor%20Loop%20%28Core%20Value%29.svg)
+
+This loop represents the repeatable lifecycle of a task from plan to build to documentation. Planning establishes intent before any command runs, building executes the scoped command with explicit inputs, and documentation records results as a first-class output. The cycle is designed to be auditable and repeatable so that outcomes can be recreated and reviewed. Documentation is not an afterthought; it is the final, required step in the loop.
 
 ## Features
 - Native binaries for Windows and Linux
 - Structured logging to stdout and a log file
 - OS-appropriate config and log locations
-- Deterministic, auditable job execution with local state records
+- Deterministic, auditable job and task execution with local state records
 
 ## Install
 
@@ -50,6 +70,13 @@ orchastration hash --file ./path/to/file
 orchastration list
 orchastration run sample
 orchastration status
+orchastration plan list
+orchastration plan create sample_task
+orchastration plan status sample_task
+orchastration build run sample_task
+orchastration doc generate sample_task
+orchastration git issue create sample_task
+orchastration git branch create sample_task
 ```
 
 For a step-by-step walkthrough, see `USAGE.md`.
@@ -66,8 +93,11 @@ Execution records are stored under an OS-appropriate state directory (override w
 - Linux: `$XDG_CACHE_HOME/orchastration/state` (falls back to `~/.cache/orchastration/state`)
 - Windows: `%LocalAppData%\\orchastration\\state`
 
-Each run is recorded under:
+Job runs are recorded under:
 `state/runs/<job-name>/<timestamp>.json` and `state/runs/<job-name>/last.json`
+
+Task state is recorded under:
+`state/tasks/<task>.json` and task runs under `state/runs/<task>/<timestamp>.json`
 
 ## Logging
 Logs are JSON and written to stdout and a log file:
